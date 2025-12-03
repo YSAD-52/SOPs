@@ -1,0 +1,32 @@
+/* Estilos para el sidebar fijo */
+@media (min-width: 768px) {
+    .sidebar {
+        position: fixed;
+        height: 100vh;
+        z-index: 1000;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        padding: 48px 0 0; 
+        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+    }
+    /* Mueve el contenido principal para que no se superponga al sidebar */
+    .ms-sm-auto {
+        margin-left: 200px !important; 
+    }
+}
+
+/* Ajustes visuales de la barra lateral */
+.sidebar .nav-link {
+    font-weight: 500;
+    color: #333;
+}
+.sidebar .nav-link.active {
+    color: #0d6efd; /* Color primario de Bootstrap */
+    background-color: #f8f9fa;
+}
+
+/* Asegura que los enlaces de las tarjetas no se vean subrayados */
+.card a {
+    text-decoration: none;
+}
