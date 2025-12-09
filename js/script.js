@@ -52,9 +52,7 @@ document.addEventListener('DOMContentLoaded', function() {
             sidebar.classList.toggle('sidebar-active');
         });
 
-        // ----------------------------------------------------
         // Lógica para cerrar el menú al hacer clic fuera (Solo en Móvil)
-        // ----------------------------------------------------
         document.addEventListener('click', function(event) {
             
             // 1. Verificar si el menú está visible y si estamos en vista móvil
@@ -67,26 +65,22 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
 
-        // ----------------------------------------------------
-        // Lógica para asegurar el comportamiento inicial correcto
-        // ----------------------------------------------------
-
-        // Asegurar que el menú se oculte automáticamente en móviles al cargar
-        // Esto previene un estado visual incorrecto si el usuario estaba en desktop
-        if (window.innerWidth < mobileBreakpoint) {
-            sidebar.classList.remove('sidebar-active');
-        }
-
-        // Manejar el cambio de tamaño de la ventana
+        // Lógica para asegurar el comportamiento inicial correcto al cargar/redimensionar
         window.addEventListener('resize', function() {
-            // Si la ventana crece a tamaño de escritorio, forzar la visibilidad
+            // Si la ventana pasa a escritorio, asegurar que la clase sidebar-active se remueva 
+            // para que el CSS de @media se encargue de mostrarlo fijo.
             if (window.innerWidth >= mobileBreakpoint) {
-                // En escritorio, el CSS se encarga de posicionarlo y mostrarlo siempre (transform: translateX(0))
                 sidebar.classList.remove('sidebar-active');
-            } else {
-                // En móvil, forzar que esté colapsado inicialmente
+            }
+            // En móvil, forzar que esté colapsado inicialmente
+            if (window.innerWidth < mobileBreakpoint) {
                 sidebar.classList.remove('sidebar-active');
             }
         });
+
+        // Asegurar el estado inicial en móvil
+        if (window.innerWidth < mobileBreakpoint) {
+            sidebar.classList.remove('sidebar-active');
+        }
     }
 });
