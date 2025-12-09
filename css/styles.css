@@ -87,3 +87,8 @@
 .stretched-link {
     text-decoration: none; /* Quitar el subrayado del enlace */
 }
+
+/* Nuevo estilo para las tarjetas en la sección principal */
+#main-content .card-body {
+    position: relative; /* Necesario para que stretched-link funcione correctamente */
+}
