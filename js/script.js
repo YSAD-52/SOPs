@@ -1,21 +1,92 @@
 document.addEventListener('DOMContentLoaded', function() {
+    
+    // ----------------------------------------------------
+    // 1. Lógica del Buscador de SOPs
+    // ----------------------------------------------------
     const searchInput = document.getElementById('searchInput');
     const sopItems = document.querySelectorAll('.sop-item');
+    const noResultsMessage = document.getElementById('noResults');
 
-    // Escucha el evento de tecleo
-    searchInput.addEventListener('keyup', function() {
-        const searchTerm = searchInput.value.toLowerCase().trim();
-        
-        sopItems.forEach(item => {
-            // Usa el atributo data-search-term para una búsqueda limpia
-            const itemSearchData = item.getAttribute('data-search-term').toLowerCase();
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            let resultsFound = false;
 
-            // Muestra u oculta la tarjeta
-            if (itemSearchData.includes(searchTerm)) {
-                item.style.display = 'block'; 
-            } else {
-                item.style.display = 'none';
+            sopItems.forEach(item => {
+                // Obtener el texto de búsqueda de la tarjeta (data-search-term)
+                const itemSearchTerm = item.getAttribute('data-search-term').toLowerCase();
+
+                if (itemSearchTerm.includes(searchTerm)) {
+                    // Mostrar la tarjeta si coincide
+                    item.style.display = 'block';
+                    resultsFound = true;
+                } else {
+                    // Ocultar la tarjeta si no coincide
+                    item.style.display = 'none';
+                }
+            });
+
+            // Mostrar u ocultar el mensaje de "No Resultados"
+            if (noResultsMessage) {
+                if (resultsFound) {
+                    noResultsMessage.style.display = 'none';
+                } else {
+                    noResultsMessage.style.display = 'block';
+                }
             }
         });
-    });
+    }
+
+    // ----------------------------------------------------
+    // 2. Lógica del Sidebar Desplegable (Toggle)
+    // ----------------------------------------------------
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const mobileBreakpoint = 768; // El mismo breakpoint que usa Bootstrap (md)
+
+    if (sidebar && sidebarToggle) {
+        
+        // Función principal para mostrar/ocultar el menú
+        sidebarToggle.addEventListener('click', function(e) {
+            e.stopPropagation(); // Prevenir que el clic se propague al documento
+            sidebar.classList.toggle('sidebar-active');
+        });
+
+        // ----------------------------------------------------
+        // Lógica para cerrar el menú al hacer clic fuera (Solo en Móvil)
+        // ----------------------------------------------------
+        document.addEventListener('click', function(event) {
+            
+            // 1. Verificar si el menú está visible y si estamos en vista móvil
+            if (sidebar.classList.contains('sidebar-active') && window.innerWidth < mobileBreakpoint) {
+                
+                // 2. Verificar que el clic no haya sido dentro del menú ni en el botón de toggle
+                if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
+                    sidebar.classList.remove('sidebar-active');
+                }
+            }
+        });
+
+        // ----------------------------------------------------
+        // Lógica para asegurar el comportamiento inicial correcto
+        // ----------------------------------------------------
+
+        // Asegurar que el menú se oculte automáticamente en móviles al cargar
+        // Esto previene un estado visual incorrecto si el usuario estaba en desktop
+        if (window.innerWidth < mobileBreakpoint) {
+            sidebar.classList.remove('sidebar-active');
+        }
+
+        // Manejar el cambio de tamaño de la ventana
+        window.addEventListener('resize', function() {
+            // Si la ventana crece a tamaño de escritorio, forzar la visibilidad
+            if (window.innerWidth >= mobileBreakpoint) {
+                // En escritorio, el CSS se encarga de posicionarlo y mostrarlo siempre (transform: translateX(0))
+                sidebar.classList.remove('sidebar-active');
+            } else {
+                // En móvil, forzar que esté colapsado inicialmente
+                sidebar.classList.remove('sidebar-active');
+            }
+        });
+    }
 });

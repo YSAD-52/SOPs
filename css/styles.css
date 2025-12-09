@@ -1,32 +1,89 @@
-/* Estilos para el sidebar fijo */
+/*
+ * ---------------------------------------
+ * Estilos Generales y Comportamiento del Sidebar
+ * ---------------------------------------
+ */
+
+/* Establece el menú lateral como fijo, ocupando toda la altura */
+.sidebar-collapsed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 250px; /* Ancho del menú desplegado */
+    height: 100vh; /* Altura total de la ventana */
+    z-index: 1050; /* Alto z-index para estar por encima del contenido */
+    
+    /* Por defecto, oculta el menú moviéndolo a la izquierda (fuera de la pantalla) */
+    transform: translateX(-250px);
+    
+    /* Transición suave para el efecto de despliegue */
+    transition: transform 0.3s ease-in-out; 
+    
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra para destacarlo al desplegarse */
+    padding-top: 50px; /* Espacio extra en la parte superior para el botón de toggle en móvil */
+}
+
+/* Clase que se activa con JavaScript para mostrar el menú */
+.sidebar-active {
+    transform: translateX(0); /* Mueve el menú a su posición visible */
+}
+
+/*
+ * ---------------------------------------
+ * Estilos de Escritorio (Desktop)
+ * ---------------------------------------
+ */
 @media (min-width: 768px) {
-    .sidebar {
+    
+    /* 1. Ocultar el botón de menú en escritorio */
+    #sidebarToggle {
+        display: none !important;
+    }
+    
+    /* 2. El menú lateral es SIEMPRE visible y fijo en desktop */
+    #sidebar {
+        /* Se anulan las propiedades de colapso */
         position: fixed;
-        height: 100vh;
-        z-index: 1000;
-        top: 0;
-        bottom: 0;
         left: 0;
-        padding: 48px 0 0; 
-        box-shadow: inset -1px 0 0 rgba(0, 0, 0, .1);
+        transform: translateX(0); 
+        padding-top: 15px; /* Padding normal de escritorio */
+        box-shadow: none; /* No necesita sombra si está fijo */
     }
-    /* Mueve el contenido principal para que no se superponga al sidebar */
-    .ms-sm-auto {
-        margin-left: 200px !important; 
+    
+    /* 3. Desplazar el Contenido Principal */
+    /* El contenido principal debe tener un margen izquierdo igual al ancho del sidebar */
+    #main-content {
+        /* En Bootstrap col-md-9 ya ocupa el ancho restante, 
+           pero necesita el margen para no superponerse al sidebar fixed */
+        margin-left: 250px; /* Ancho del sidebar */
     }
 }
 
-/* Ajustes visuales de la barra lateral */
-.sidebar .nav-link {
-    font-weight: 500;
-    color: #333;
-}
-.sidebar .nav-link.active {
-    color: #0d6efd; /* Color primario de Bootstrap */
-    background-color: #f8f9fa;
+
+/*
+ * ---------------------------------------
+ * Estilos para las Tarjetas SOP (Buscador)
+ * ---------------------------------------
+ */
+
+/* Elimina el padding de Bootstrap para una mejor visualización de las tarjetas en el sidebar */
+.sop-item .card-body {
+    padding: 0.5rem !important; 
 }
 
-/* Asegura que los enlaces de las tarjetas no se vean subrayados */
-.card a {
-    text-decoration: none;
+/* Efecto hover simple para las tarjetas de SOP */
+.sop-item {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.sop-item:hover {
+    transform: translateY(-2px); /* Pequeño desplazamiento vertical */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave al pasar el ratón */
+    background-color: #f8f9fa; /* Color de fondo ligeramente más claro */
+}
+
+/* Asegura que el enlace ocupe toda la tarjeta para un mejor clic */
+.stretched-link {
+    text-decoration: none; /* Quitar el subrayado del enlace */
 }
