@@ -13,14 +13,14 @@
     height: 100vh; /* Altura total de la ventana */
     z-index: 1050; /* Alto z-index para estar por encima del contenido */
     
-    /* Por defecto, oculta el menú moviéndolo a la izquierda (fuera de la pantalla) */
+    /* Por defecto, oculta el menú moviéndolo a la izquierda */
     transform: translateX(-250px);
     
     /* Transición suave para el efecto de despliegue */
     transition: transform 0.3s ease-in-out; 
     
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* Sombra para destacarlo al desplegarse */
-    padding-top: 50px; /* Espacio extra en la parte superior para el botón de toggle en móvil */
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); 
+    padding-top: 50px; 
 }
 
 /* Clase que se activa con JavaScript para mostrar el menú */
@@ -29,207 +29,38 @@
 }
 
 
+/* * CRÍTICO: Definición del Margen del Contenido Principal para Escritorio
+ * Esto asegura que el contenido no quede bajo el menú cuando el menú está visible.
+ */
+@media (min-width: 768px) {
+    #main-content {
+        margin-left: 250px; /* Deja espacio a la izquierda para el menú */
+    }
+}
 
 
 /*
  * ---------------------------------------
- * Estilos para las Tarjetas SOP (Buscador)
+ * Estilos para las Tarjetas SOP (Contenido Principal)
  * ---------------------------------------
  */
 
-/* Elimina el padding de Bootstrap para una mejor visualización de las tarjetas en el sidebar */
-.sop-item .card-body {
-    padding: 0.5rem !important; 
+/* Asegura que el enlace ocupe toda la tarjeta para un mejor clic */
+.stretched-link {
+    text-decoration: none; 
 }
 
 /* Efecto hover simple para las tarjetas de SOP */
-.sop-item {
+.sop-item .card {
     cursor: pointer;
     transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
 }
 
-.sop-item:hover {
-    transform: translateY(-2px); /* Pequeño desplazamiento vertical */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave al pasar el ratón */
-    background-color: #f8f9fa; /* Color de fondo ligeramente más claro */
+.sop-item .card:hover {
+    transform: translateY(-3px); 
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15) !important; 
 }
 
-/* Asegura que el enlace ocupe toda la tarjeta para un mejor clic */
-.stretched-link {
-    text-decoration: none; /* Quitar el subrayado del enlace */
-}
-
-/* Nuevo estilo para las tarjetas en la sección principal */
-#main-content .card-body {
-    position: relative; /* Necesario para que stretchdocument.addEventListener('DOMContentLoaded', function() {
-    
-    // ----------------------------------------------------
-    // 1. Lógica del Buscador de SOPs
-    // ----------------------------------------------------
-    const searchInput = document.getElementById('searchInput');
-    const sopItems = document.querySelectorAll('.sop-item');
-    const noResultsMessage = document.getElementById('noResults');
-
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            let resultsFound = false;
-
-            sopItems.forEach(item => {
-                // Obtener el texto de búsqueda de la tarjeta (data-search-term)
-                const itemSearchTerm = item.getAttribute('data-search-term').toLowerCase();
-
-                if (itemSearchTerm.includes(searchTerm)) {
-                    // Mostrar la tarjeta si coincide
-                    item.style.display = 'block';
-                    resultsFound = true;
-                } else {
-                    // Ocultar la tarjeta si no coincide
-                    item.style.display = 'none';
-                }
-            });
-
-            // Mostrar u ocultar el mensaje de "No Resultados"
-            if (noResultsMessage) {
-                if (resultsFound) {
-                    noResultsMessage.style.display = 'none';
-                } else {
-                    noResultsMessage.style.display = 'block';
-                }
-            }
-        });
-    }
-
-    // ----------------------------------------------------
-    // 2. Lógica del Sidebar Desplegable (Toggle)
-    // ----------------------------------------------------
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const mobileBreakpoint = 768; // El mismo breakpoint que usa Bootstrap (md)
-
-    if (sidebar && sidebarToggle) {
-        
-        // Función principal para mostrar/ocultar el menú
-        sidebarToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevenir que el clic se propague al documento
-            sidebar.classList.toggle('sidebar-active');
-        });
-
-        // Lógica para cerrar el menú al hacer clic fuera (Solo en Móvil)
-        document.addEventListener('click', function(event) {
-            
-            // 1. Verificar si el menú está visible y si estamos en vista móvil
-            if (sidebar.classList.contains('sidebar-active') && window.innerWidth < mobileBreakpoint) {
-                
-                // 2. Verificar que el clic no haya sido dentro del menú ni en el botón de toggle
-                if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                    sidebar.classList.remove('sidebar-active');
-                }
-            }
-        });
-
-        // Lógica para asegurar el comportamiento inicial correcto al cargar/redimensionar
-        window.addEventListener('resize', function() {
-            // Si la ventana pasa a escritorio, asegurar que la clase sidebar-active se remueva 
-            // para que el CSS de @media se encargue de mostrarlo fijo.
-            if (window.innerWidth >= mobileBreakpoint) {
-                sidebar.classList.remove('sidebar-active');
-            }
-            // En móvil, forzar que esté colapsado inicialmente
-            if (window.innerWidth < mobileBreakpoint) {
-                sidebar.classList.remove('sidebar-active');
-            }
-        });
-
-        // Asegurar el estado inicial en móvil
-        if (window.innerWidth < mobileBreakpoint) {
-            sidebar.classList.remove('sidebar-active');
-        }
-    }
-});document.addEventListener('DOMContentLoaded', function() {
-    
-    // ----------------------------------------------------
-    // 1. Lógica del Buscador de SOPs
-    // ----------------------------------------------------
-    const searchInput = document.getElementById('searchInput');
-    const sopItems = document.querySelectorAll('.sop-item');
-    const noResultsMessage = document.getElementById('noResults');
-
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            let resultsFound = false;
-
-            sopItems.forEach(item => {
-                // Obtener el texto de búsqueda de la tarjeta (data-search-term)
-                const itemSearchTerm = item.getAttribute('data-search-term').toLowerCase();
-
-                if (itemSearchTerm.includes(searchTerm)) {
-                    // Mostrar la tarjeta si coincide
-                    item.style.display = 'block';
-                    resultsFound = true;
-                } else {
-                    // Ocultar la tarjeta si no coincide
-                    item.style.display = 'none';
-                }
-            });
-
-            // Mostrar u ocultar el mensaje de "No Resultados"
-            if (noResultsMessage) {
-                if (resultsFound) {
-                    noResultsMessage.style.display = 'none';
-                } else {
-                    noResultsMessage.style.display = 'block';
-                }
-            }
-        });
-    }
-
-    // ----------------------------------------------------
-    // 2. Lógica del Sidebar Desplegable (Toggle)
-    // ----------------------------------------------------
-    const sidebar = document.getElementById('sidebar');
-    const sidebarToggle = document.getElementById('sidebarToggle');
-    const mobileBreakpoint = 768; // El mismo breakpoint que usa Bootstrap (md)
-
-    if (sidebar && sidebarToggle) {
-        
-        // Función principal para mostrar/ocultar el menú
-        sidebarToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); // Prevenir que el clic se propague al documento
-            sidebar.classList.toggle('sidebar-active');
-        });
-
-        // Lógica para cerrar el menú al hacer clic fuera (Solo en Móvil)
-        document.addEventListener('click', function(event) {
-            
-            // 1. Verificar si el menú está visible y si estamos en vista móvil
-            if (sidebar.classList.contains('sidebar-active') && window.innerWidth < mobileBreakpoint) {
-                
-                // 2. Verificar que el clic no haya sido dentro del menú ni en el botón de toggle
-                if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
-                    sidebar.classList.remove('sidebar-active');
-                }
-            }
-        });
-
-        // Lógica para asegurar el comportamiento inicial correcto al cargar/redimensionar
-        window.addEventListener('resize', function() {
-            // Si la ventana pasa a escritorio, asegurar que la clase sidebar-active se remueva 
-            // para que el CSS de @media se encargue de mostrarlo fijo.
-            if (window.innerWidth >= mobileBreakpoint) {
-                sidebar.classList.remove('sidebar-active');
-            }
-            // En móvil, forzar que esté colapsado inicialmente
-            if (window.innerWidth < mobileBreakpoint) {
-                sidebar.classList.remove('sidebar-active');
-            }
-        });
-
-        // Asegurar el estado inicial en móvil
-        if (window.innerWidth < mobileBreakpoint) {
-            sidebar.classList.remove('sidebar-active');
-        }
-    }
-});ed-link funcione correctamente */
+.sop-item .card-body {
+    position: relative; 
 }
