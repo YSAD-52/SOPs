@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // ----------------------------------------------------
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
-    const mainContent = document.getElementById('main-content'); // CRÍTICO: Debe encontrar el elemento
+    const mainContent = document.getElementById('main-content'); // Obtener el contenido principal
 
     // Solo ejecuta la lógica si encuentra TODOS los elementos necesarios
     if (sidebar && sidebarToggle && mainContent) {
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // 1. Mostrar/Ocultar el menú 
             sidebar.classList.toggle('sidebar-active'); 
 
-            // 2. Desplazar/Regresar el contenido principal
+            // 2. Desplazar/Regresar el contenido principal (margin dinámico)
             mainContent.classList.toggle('content-shifted'); 
         });
 

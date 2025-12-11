@@ -35,17 +35,32 @@
  * ---------------------------------------
  */
 
-/* Nueva clase controlada por JS para añadir el margen */
+/* Clase controlada por JS para añadir el margen y desplazar el contenido */
 .content-shifted {
     margin-left: 250px;
     transition: margin-left 0.3s ease-in-out; /* Transición suave del margen */
 }
 
-/* En móvil, no queremos que el contenido principal se mueva */
+/* Solo aplicar el margen en escritorio (para que no afecte el diseño móvil) */
 @media (max-width: 767px) {
     .content-shifted {
         margin-left: 0 !important;
     }
+}
+
+
+/*
+ * ---------------------------------------
+ * Ajuste de la Vista de Escritorio (Para que ocupe el espacio en la columna)
+ * ---------------------------------------
+ */
+@media (min-width: 768px) {
+    #main-content {
+        /* Se usa para que la columna principal respete el ancho de col-md-9 */
+        margin-left: 0; 
+    }
+    
+    /* CRÍTICO: La clase .content-shifted será la encargada de añadir los 250px */
 }
 
 
