@@ -42,13 +42,19 @@ document.addEventListener('DOMContentLoaded', function() {
     // ----------------------------------------------------
     const sidebar = document.getElementById('sidebar');
     const sidebarToggle = document.getElementById('sidebarToggle');
+    const mainContent = document.getElementById('main-content'); // ¡CRÍTICO: Nuevo elemento!
 
-    if (sidebar && sidebarToggle) {
+    if (sidebar && sidebarToggle && mainContent) {
         
         // Función principal para mostrar/ocultar el menú
         sidebarToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); // Evitar que el clic se propague y cierre inmediatamente
-            sidebar.classList.toggle('sidebar-active'); // Toggle en cualquier tamaño de pantalla
+            e.stopPropagation(); 
+            
+            // 1. Mostrar/Ocultar el menú 
+            sidebar.classList.toggle('sidebar-active'); 
+
+            // 2. Desplazar/Regresar el contenido principal (solo si está activo)
+            mainContent.classList.toggle('content-shifted'); 
         });
 
         // Lógica para cerrar el menú al hacer clic fuera
@@ -60,11 +66,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 // ... y si el clic no fue dentro del menú ni en el botón de toggle, ocultar el menú.
                 if (!sidebar.contains(event.target) && !sidebarToggle.contains(event.target)) {
                     sidebar.classList.remove('sidebar-active');
+                    mainContent.classList.remove('content-shifted'); // Quitar el margen
                 }
             }
         });
 
-        // Estado inicial: Asegurar que esté colapsado al cargar
+        // Estado inicial: Asegurar que esté colapsado al cargar y sin margen.
         sidebar.classList.remove('sidebar-active');
+        mainContent.classList.remove('content-shifted'); 
     }
 });

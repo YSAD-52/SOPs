@@ -11,7 +11,7 @@
     left: 0;
     width: 250px; /* Ancho del menú desplegado */
     height: 100vh; /* Altura total de la ventana */
-    z-index: 1050; /* Alto z-index para estar por encima del contenido */
+    z-index: 1050; 
     
     /* Por defecto, oculta el menú moviéndolo a la izquierda */
     transform: translateX(-250px);
@@ -29,12 +29,22 @@
 }
 
 
-/* * CRÍTICO: Definición del Margen del Contenido Principal para Escritorio
- * Esto asegura que el contenido no quede bajo el menú cuando el menú está visible.
+/*
+ * ---------------------------------------
+ * Espacio Dinámico para el Contenido Principal
+ * ---------------------------------------
  */
-@media (min-width: 768px) {
-    #main-content {
-        margin-left: auto; /* Deja espacio a la izquierda para el menú */
+
+/* Nueva clase controlada por JS para añadir el margen */
+.content-shifted {
+    margin-left: 250px;
+    transition: margin-left 0.3s ease-in-out; /* Transición suave del margen */
+}
+
+/* En móvil, no queremos que el contenido principal se mueva */
+@media (max-width: 767px) {
+    .content-shifted {
+        margin-left: 0 !important;
     }
 }
 
