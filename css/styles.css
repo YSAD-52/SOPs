@@ -34,7 +34,7 @@
  */
 @media (min-width: 768px) {
     #main-content {
-        margin-left: 250px; /* Deja espacio a la izquierda para el menú */
+        margin-left: auto; /* Deja espacio a la izquierda para el menú */
     }
 }
 
