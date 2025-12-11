@@ -28,17 +28,6 @@
     transform: translateX(0); /* Mueve el menú a su posición visible */
 }
 
-
-/* * CRÍTICO: Definición del Margen del Contenido Principal para Escritorio
- * Esto asegura que el contenido no quede bajo el menú cuando el menú está visible.
- */
-@media (min-width: 768px) {
-    #main-content {
-        margin-left: 250px; /* Deja espacio a la izquierda para el menú */
-    }
-}
-
-
 /*
  * ---------------------------------------
  * Estilos para las Tarjetas SOP (Contenido Principal)
