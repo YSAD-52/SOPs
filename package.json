@@ -1,0 +1,32 @@
+{
+  "name": "sops",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node api/upload-sop.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YSAD-52/SOPs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YSAD-52/SOPs/issues"
+  },
+  "homepage": "https://github.com/YSAD-52/SOPs#readme",
+  "dependencies": {
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1",
+    "mongoose": "^9.0.1",
+    "multer": "^2.0.2",
+    "pdf2image": "^1.2.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}
